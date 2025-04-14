@@ -25,7 +25,8 @@ function Predictions() {
 }
 
 const styles = {
-  container: { padding: "20px", textAlign: "center" }
+  
+  container: { color: "#333", padding: "20px", textAlign: "center" }
 };
 
 export default Predictions;

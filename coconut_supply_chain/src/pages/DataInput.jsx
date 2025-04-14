@@ -103,6 +103,7 @@ function DataInput() {
 
 const Datastyles = {
   Datacontainer: {
+    color: "#333",
     justyfyContent: "center",
     align: "center",
     padding: "20px",
@@ -111,11 +112,14 @@ const Datastyles = {
     fontFamily: "Arial, sans-serif",
   },
   form: {
+    color: "#333",
     display: "flex",
     flexDirection: "column",
     gap: "10px",
   },
   input: {
+    background: "#f9f9f9",
+    color: "#333",
     padding: "8px",
     border: "1px solid #ccc",
     borderRadius: "4px",

@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import SupplyChain from "./pages/SupplyChain";
 import Predictions from "./pages/Predictions";
 import DataInput from "./pages/DataInput";
 import AboutUs from "./pages/AboutUs";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import ForgotPassword from "./auth/ForgotPassword"; // optional if you're using it
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -32,6 +35,7 @@ function App() {
               <li style={styles.navItem}>
                 <Link to="/about-us" style={styles.link}>About Us</Link>
               </li>
+             
             </ul>
           </nav>
 
@@ -43,19 +47,21 @@ function App() {
               <Route path="/predictions" element={<Predictions />} />
               <Route path="/data-input" element={<DataInput />} />
               <Route path="/about-us" element={<AboutUs />} />
-              {/* Optional: Add a 404 route */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<div>Page Not Found</div>} />
             </Routes>
           </main>
         </div>
       </Router>
     </>
-  )
+  );
 }
-
 
 const styles = {
   appContainer: {
+    background: "#f4f4f4",
     minHeight: "100vw",
     display: "flex",
     flexDirection: "column",
@@ -95,4 +101,4 @@ const styles = {
   }
 };
 
-export default App
+export default App;

@@ -7,6 +7,8 @@ import { auth } from "../firebase";
 import { getAuth, onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import defaultProfile from "../assets/default-profile.png"; // Default profile image
 
+
+
 function Home() {
   const [user, setUser] = useState(null);
 
