@@ -77,21 +77,33 @@ function Home() {
         <img src={logo} alt="Logo" style={styles.logo} />
         
         
-        {/* Auth Section */}
-        <div style={styles.authContainer}>
-          {user ? (
-            <div style={styles.profileContainer}>
-              <img src={user.photoURL || defaultProfile} alt="Profile" style={styles.profilePic} />
-              <span style={styles.userName}>{user.displayName || "User"}</span>
-              <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
-            </div>
-          ) : (
-            <div style={styles.authLinks}>
-              <Link to="/login" style={styles.authLink}>Login</Link>
-              <Link to="/register" style={styles.authLink}>Register</Link>
-            </div>
-          )}
-        </div>
+      {/* Auth Section */}
+<div style={styles.authContainer}>
+  {user ? (
+    <div style={styles.profileDropdown}>
+      <img
+        src={user.photoURL || defaultProfile}
+        alt="Profile"
+        style={styles.profilePic}
+      />
+      <div style={styles.dropdownContent}>
+        <span style={styles.userName}>{user.displayName || "User"}</span>
+        <button onClick={handleLogout} style={styles.logoutBtn}>
+          🔓 Logout
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div style={styles.authButtons}>
+      <Link to="/login" style={styles.loginBtn}>
+       🔒 Login
+      </Link>
+      
+    </div>
+  )}
+</div>
+
+      
       </header>
       
       {/* Hero Section */}
@@ -194,38 +206,92 @@ const styles = {
   authContainer: {
     display: "flex",
     alignItems: "center",
+    marginRight: "20px",
   },
-  profileContainer: {
+  
+  authButtons: {
+    display: "flex",
+    gap: "10px",
+  },
+  
+  loginBtn: {
+    backgroundColor: "transparent",
+    border: "2px solid #2c5a2e",
+    color: "#2c5a2e",
+    padding: "8px 16px",
+    borderRadius: "20px",
+    fontWeight: "bold",
+    textDecoration: "none",
+    transition: "all 0.3s ease",
+  },
+  registerBtn: {
+    backgroundColor: "#2c5a2e",
+    color: "#fff",
+    border: "none",
+    padding: "8px 16px",
+    borderRadius: "20px",
+    fontWeight: "bold",
+    textDecoration: "none",
+    transition: "all 0.3s ease",
+  },
+  loginBtnHover: {
+    backgroundColor: "#2c5a2e",
+    color: "#fff",
+  },
+  
+  
+  profileDropdown: {
+    position: "relative",
     display: "flex",
     alignItems: "center",
+    cursor: "pointer",
+    marginTop: "-100px",
+    
+    
+    
   },
+  
   profilePic: {
     height: "40px",
     width: "40px",
     borderRadius: "50%",
-    marginRight: "10px",
+    border: "2px solid #2c5a2e",
+    Top: "0px",
+    
   },
+  
+  dropdownContent: {
+    backgroundColor: "#f4f4f4",
+    border: "1px solid #ddd",
+    borderRadius: "10px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    padding: "2px 2px",
+    position: "absolute",
+    top: "50px",
+    right: -20,
+    zIndex: 10,
+    minWidth: "150px",
+  },
+  
   userName: {
-    fontSize: "16px",
-    marginRight: "10px",
+    fontWeight: "bold",
+    color: "#333",
+    display: "block",
+    marginBottom: "8px",
   },
+  
   logoutBtn: {
     backgroundColor: "#f44336",
     color: "white",
     border: "none",
-    padding: "5px 10px",
-    borderRadius: "4px",
+    padding: "8px 14px",
+    borderRadius: "20px",
     cursor: "pointer",
+    fontWeight: "bold",
+    width: "100%",
+    transition: "background 0.3s ease",
   },
-  authLinks: {
-    display: "flex",
-  },
-  authLink: {
-    textDecoration: "none",
-    color: "#2c5a2e",
-    marginLeft: "10px",
-    fontSize: "16px",
-  },
+  
   hero: {
     background: `url(${coc3}) center/cover no-repeat`,
     padding: "40px 20px",
