@@ -141,11 +141,11 @@ function Home() {
         <h2 style={styles.sectionTitle}>What We Analyze</h2>
         <div style={styles.servicesGrid}>
           <div style={styles.serviceItem}>Price Trend Analysis</div>
-          <div style={styles.serviceItem}>Supply-Demand Gap Analysis</div>
-          <div style={styles.serviceItem}>Cost-Profit Optimization</div>
-          <div style={styles.serviceItem}>Export Opportunity Analysis</div>
-          <div style={styles.serviceItem}>Geospatial Cost Analysis</div>
-        </div>
+          <div style={styles.serviceItem}>Supply-Demand Analysis</div>
+          <div style={styles.serviceItem}>Cost-Profit Analysis</div>
+          <div style={styles.serviceItem}>Export Opportunities</div>
+          <div style={styles.serviceItem}>Transportation Cost Analysis</div>
+          </div>
       </section>
 
       {/* Footer */}
