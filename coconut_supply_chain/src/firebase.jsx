@@ -1,6 +1,7 @@
 // firebase.jsx
 
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -22,6 +23,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app); // ✅ Initialize Firestore
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -29,8 +31,8 @@ const googleProvider = new GoogleAuthProvider();
 const registerWithEmail = async (email, password, businessName) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    // Optionally update profile or add businessName to Firestore here
     console.log("User registered:", userCredential.user);
+    // Optional: save business name in Firestore here
   } catch (error) {
     throw error;
   }
@@ -65,8 +67,9 @@ const resetPassword = async (email) => {
   }
 };
 
-// Export all functions and auth objects
+// ✅ Export auth and db (required for Firestore access)
 export {
+  db,
   auth,
   googleProvider,
   registerWithEmail,

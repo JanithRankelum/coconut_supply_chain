@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db, auth } from "../firebase";
 
 function DataInput() {
   const [formData, setFormData] = useState({
+    supplierId: "",
     supplier: "",
     location: "",
     quantity: "",
@@ -16,28 +19,38 @@ function DataInput() {
   });
 
   const [message, setMessage] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  // Get current user from Firebase Auth
+  onAuthStateChanged(auth, (user) => {
+    if (user) setUserId(user.uid);
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate input fields
-    if (formData.quantity <= 0 || formData.pricePerUnit <= 0 || formData.transportCost < 0 || formData.storageCost < 0) {
-      setMessage({ text: "Invalid input values. Please enter positive numbers.", type: "error" });
+
+    if (!userId) {
+      setMessage({ text: "User not authenticated", type: "error" });
       return;
     }
 
     try {
-      await axios.post("http://localhost:5000/add-supply", formData);
+      // Add new data entry to Firestore (using addDoc to avoid overwriting)
+      await addDoc(collection(db, "suppliers", userId, "data"), {
+        ...formData,
+        timestamp: serverTimestamp(),
+      });
+      
       setMessage({ text: "Data submitted successfully!", type: "success" });
+
+      // Reset form
       setFormData({
+        supplierId: "",
         supplier: "",
         location: "",
         quantity: "",
@@ -50,77 +63,55 @@ function DataInput() {
         isExported: false,
       });
     } catch (error) {
-      setMessage({ text: "Error submitting data. Please try again.", type: "error" });
+      console.error("Firestore Error:", error);
+      setMessage({ text: "Error submitting data.", type: "error" });
     }
   };
 
   return (
-    <div style={Datastyles.Datacontainer}>
-      <h2> Coconut Supply Data</h2>
-      {message && <p style={message.type === "success" ? Datastyles.success : Datastyles.error}>{message.text}</p>}
-      <form onSubmit={handleSubmit} style={Datastyles.form}>
-        <label>Supplier Name:</label>
-        <input type="text" name="supplier" value={formData.supplier} onChange={handleChange} required style={Datastyles.input} />
-
-        <label>Location (District/Market):</label>
-        <input type="text" name="location" value={formData.location} onChange={handleChange} required style={Datastyles.input} />
-
-        <label>Quantity (Units):</label>
-        <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required style={Datastyles.input} min="1" />
-
-        <label>Price per Unit (LKR):</label>
-        <input type="number" name="pricePerUnit" value={formData.pricePerUnit} onChange={handleChange} required style={Datastyles.input} min="1" />
-
-        <label>Harvest Date:</label>
-        <input type="date" name="harvestDate" value={formData.harvestDate} onChange={handleChange} required style={Datastyles.input} />
-
-        <label>Quality Grade:</label>
-        <select name="qualityGrade" value={formData.qualityGrade} onChange={handleChange} style={Datastyles.input}>
-          <option value="A">Grade A (Premium)</option>
-          <option value="B">Grade B (Standard)</option>
-          <option value="C">Grade C (Utility)</option>
+    <div style={styles.container}>
+      <h2>Coconut Supply Data</h2>
+      {message && <p style={message.type === "success" ? styles.success : styles.error}>{message.text}</p>}
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <input type="text" name="supplierId" value={formData.supplierId} onChange={handleChange} placeholder="Supplier ID" style={styles.input} required />
+        <input type="text" name="supplier" value={formData.supplier} onChange={handleChange} placeholder="Supplier Name" style={styles.input} required />
+        <input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Location" style={styles.input} required />
+        <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} placeholder="Quantity" style={styles.input} required />
+        <input type="number" name="pricePerUnit" value={formData.pricePerUnit} onChange={handleChange} placeholder="Price per Unit" style={styles.input} required />
+        <input type="date" name="harvestDate" value={formData.harvestDate} onChange={handleChange} style={styles.input} required />
+        <select name="qualityGrade" value={formData.qualityGrade} onChange={handleChange} style={styles.input}>
+          <option value="A">Grade A</option>
+          <option value="B">Grade B</option>
+          <option value="C">Grade C</option>
         </select>
-
-        <label>Transport Cost per Unit (LKR):</label>
-        <input type="number" name="transportCost" value={formData.transportCost} onChange={handleChange} required style={Datastyles.input} min="0" />
-
-        <label>Storage Cost per Unit (LKR/month):</label>
-        <input type="number" name="storageCost" value={formData.storageCost} onChange={handleChange} required style={Datastyles.input} min="0" />
-
-        <label>Demand Forecast (Units):</label>
-        <input type="number" name="demandForecast" value={formData.demandForecast} onChange={handleChange} style={Datastyles.input} min="0" />
-
+        <input type="number" name="transportCost" value={formData.transportCost} onChange={handleChange} placeholder="Transport Cost" style={styles.input} required />
+        <input type="number" name="storageCost" value={formData.storageCost} onChange={handleChange} placeholder="Storage Cost" style={styles.input} required />
+        <input type="number" name="demandForecast" value={formData.demandForecast} onChange={handleChange} placeholder="Demand Forecast" style={styles.input} />
         <label>
           <input type="checkbox" name="isExported" checked={formData.isExported} onChange={handleChange} />
-          Mark for Export
+          Exported
         </label>
-
-        <button type="submit" style={Datastyles.button}>Submit</button>
+        <button type="submit" style={styles.button}>Submit</button>
       </form>
     </div>
   );
 }
 
-const Datastyles = {
-  Datacontainer: {
+const styles = {
+  container: {
     color: "#333",
-    justyfyContent: "center",
-    align: "center",
     padding: "20px",
-    margin: "0",
-    textAlign: "left",
     fontFamily: "Arial, sans-serif",
   },
   form: {
-    color: "#333",
     display: "flex",
     flexDirection: "column",
     gap: "10px",
   },
   input: {
-    background: "#f9f9f9",
+    backgroundColor: "#f9f9f9",
     color: "#333",
-    padding: "8px",
+    padding: "10px",
     border: "1px solid #ccc",
     borderRadius: "4px",
   },
@@ -131,7 +122,6 @@ const Datastyles = {
     border: "none",
     borderRadius: "4px",
     cursor: "pointer",
-    fontSize: "16px",
   },
   success: {
     color: "green",

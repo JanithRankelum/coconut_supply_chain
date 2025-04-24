@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import ForgotPassword from "./auth/ForgotPassword"; // optional if you're using it
+import Suppliers from "./pages/suppliers"; // optional if you're using it
 
 function App() {
   const [count, setCount] = useState(0);
@@ -33,6 +34,9 @@ function App() {
                 <Link to="/data-input" style={styles.link}>Data Input</Link>
               </li>
               <li style={styles.navItem}>
+                <Link to="/suppliers" style={styles.link}>Suppliers</Link>
+              </li>
+              <li style={styles.navItem}>
                 <Link to="/about-us" style={styles.link}>About Us</Link>
               </li>
              
@@ -46,6 +50,7 @@ function App() {
               <Route path="/supply-chain" element={<SupplyChain />} />
               <Route path="/predictions" element={<Predictions />} />
               <Route path="/data-input" element={<DataInput />} />
+              <Route path="/suppliers" element={<Suppliers />} />
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

@@ -338,6 +338,8 @@ const styles = {
     color: "#495057",
   },
   input: {
+    backgroundColor: "#fff",
+    color: "#333",
     width: "100%",
     padding: "0.75rem",
     border: "1px solid #ced4da",
@@ -351,7 +353,7 @@ const styles = {
     },
   },
   button: {
-    backgroundColor: "#28a745",
+    backgroundColor: "#2c5a2e",
     color: "white",
     border: "none",
     padding: "0.75rem",
