@@ -2,7 +2,7 @@
 
 A data-driven web platform powered by React and Firebase that optimizes coconut supply chain operations using machine learning. This system provides real-time price tracking, demand forecasting, logistics optimization, and more through intuitive dashboards and predictive analytics.
 
-![App Screenshot](![image](https://github.com/user-attachments/assets/eec2184b-327e-4222-b503-bf3c13648638))
+![image](https://github.com/user-attachments/assets/eec2184b-327e-4222-b503-bf3c13648638)
 
 ---
 
@@ -90,7 +90,7 @@ Visit http://localhost:5173 to see your app running (if using Vite).
 ![image](https://github.com/user-attachments/assets/ef5a5568-23d2-4831-b1b8-3a37c209ec7b)
 
 ### 🏠 Homepage
-![App Screenshot](![image](https://github.com/user-attachments/assets/eec2184b-327e-4222-b503-bf3c13648638))
+![image](https://github.com/user-attachments/assets/eec2184b-327e-4222-b503-bf3c13648638)
 ![image](https://github.com/user-attachments/assets/b2164dab-629a-410f-90c0-05a71f34eb57)
 
 ## 📬 Contact
