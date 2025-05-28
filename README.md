@@ -47,6 +47,7 @@ src/
 ### 1. Clone the Repository
 
 git clone https://github.com/your-username/coconut-supply-chain.git
+
 cd coconut-supply-chain
 
 
@@ -77,6 +78,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 
 ### 4. Start the Development Server
@@ -95,5 +97,6 @@ Visit http://localhost:5173 to see your app running (if using Vite).
 
 ## 📬 Contact
 Email: manupriyanipun@gmail.com
+
 Support: 24/7 Available
 
