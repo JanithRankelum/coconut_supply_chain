@@ -295,29 +295,7 @@ function SupplyChain() {
           )}
         </div>
         
-        {/* Transportation Costs */}
-        <div style={styles.card}>
-          <h2>Transportation Cost Analysis</h2>
-          {loading.transportation ? (
-            <p>Loading transportation data...</p>
-          ) : (
-            <>
-              <Bar 
-                data={prepareTransportationChart()} 
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: { position: "top" },
-                    title: { display: true, text: "Transport Cost per Unit" }
-                  },
-                  scales: { y: { beginAtZero: true } }
-                }}
-              />
-              {renderDataTable("Transportation Costs", data.transportation, 
-                ["date", "province", "market", "transport_cost_lkr_per_unit"])}
-            </>
-          )}
-        </div>
+        
       </div>
     </div>
   );
