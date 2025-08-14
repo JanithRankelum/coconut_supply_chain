@@ -59,7 +59,7 @@ function SupplyChain() {
         { key: "supplyDemandGap", url: "/api/supply_demand_gap" },
         { key: "costProfit", url: "/api/cost_profit_optimization" },
         { key: "exportOpportunity", url: "/api/export_opportunity" },
-        { key: "transportation", url: "/api/transportation" }
+        
       ];
 
       const promises = endpoints.map(async ({ key, url }) => {
