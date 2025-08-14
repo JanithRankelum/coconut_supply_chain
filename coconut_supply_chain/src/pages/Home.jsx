@@ -152,7 +152,7 @@ function Home() {
 
    {/* Services Section - Updated with Links */}
    <section style={styles.section}>
-    <h2 style={styles.sectionTitle}>Optimization in Coconut Supply Chain Analytics</h2>
+    <h2 style={styles.sectionTitle}>Insight in Coconut Supply Chain Analytics</h2>
     <div style={styles.servicesGrid}>
       <Link to="/supply-chain" style={styles.serviceLink}>
         <div style={styles.serviceItem}>Price Trend Analysis</div>

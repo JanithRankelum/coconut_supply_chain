@@ -59,7 +59,7 @@ function SupplyChain() {
         { key: "supplyDemandGap", url: "/api/supply_demand_gap" },
         { key: "costProfit", url: "/api/cost_profit_optimization" },
         { key: "exportOpportunity", url: "/api/export_opportunity" },
-        
+        { key: "transportation", url: "/api/transportation" }
       ];
 
       const promises = endpoints.map(async ({ key, url }) => {
@@ -340,160 +340,168 @@ function SupplyChain() {
             />
           </div>
           
-          <div style={styles.chartGrid}>
-            <div style={styles.chartCard}>
-              <div style={styles.chartHeader}>
-                <h2 style={styles.chartTitle}>
-                  <FiTrendingUp style={{ marginRight: 8 }} />
-                  Price Trend Analysis
-                </h2>
-                <div style={styles.chartLegend}>
-                  <div style={styles.legendItem}>
-                    <div style={{ ...styles.legendColor, backgroundColor: "#4f46e5" }}></div>
-                    <span>Average Price</span>
-                  </div>
+          {/* First Row - Price Trend and Supply-Demand */}
+          <div style={styles.chartRow}>
+            <div style={styles.chartContainer}>
+              <div style={styles.chartCard}>
+                <div style={styles.chartHeader}>
+                  <h2 style={styles.chartTitle}>
+                    <FiTrendingUp style={{ marginRight: 8 }} />
+                    Price Trend Analysis
+                  </h2>
                 </div>
-              </div>
-              {loading.priceTrend ? (
-                <div style={styles.loading}>Loading price data...</div>
-              ) : (
-                <Line 
-                  data={preparePriceTrendChart()} 
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { display: false },
-                      tooltip: {
-                        mode: 'index',
-                        intersect: false
-                      }
-                    },
-                    scales: {
-                      x: { grid: { display: false } },
-                      y: { 
-                        grid: { color: "#e5e7eb" },
-                        beginAtZero: false 
-                      }
-                    }
-                  }}
-                  height={300}
-                />
-              )}
-            </div>
-            
-            <div style={styles.chartCard}>
-              <div style={styles.chartHeader}>
-                <h2 style={styles.chartTitle}>
-                  <FiBox style={{ marginRight: 8 }} />
-                  Supply-Demand Analysis
-                </h2>
-                <div style={styles.chartLegend}>
-                  <div style={styles.legendItem}>
-                    <div style={{ ...styles.legendColor, backgroundColor: "#10b981" }}></div>
-                    <span>Supply</span>
-                  </div>
-                  <div style={styles.legendItem}>
-                    <div style={{ ...styles.legendColor, backgroundColor: "#3b82f6" }}></div>
-                    <span>Demand</span>
-                  </div>
-                </div>
-              </div>
-              {loading.supplyDemandGap ? (
-                <div style={styles.loading}>Loading supply-demand data...</div>
-              ) : (
-                <Bar 
-                  data={prepareSupplyDemandChart()} 
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { display: false }
-                    },
-                    scales: {
-                      x: { grid: { display: false } },
-                      y: { 
-                        grid: { color: "#e5e7eb" },
-                        beginAtZero: true 
-                      }
-                    }
-                  }}
-                  height={300}
-                />
-              )}
-            </div>
-            
-            <div style={styles.chartCard}>
-              <div style={styles.chartHeader}>
-                <h2 style={styles.chartTitle}>
-                  <FiDollarSign style={{ marginRight: 8 }} />
-                  Cost-Profit Analysis
-                </h2>
-                <div style={styles.chartLegend}>
-                  <div style={styles.legendItem}>
-                    <div style={{ ...styles.legendColor, backgroundColor: "#10b981" }}></div>
-                    <span>Profit</span>
-                  </div>
-                  <div style={styles.legendItem}>
-                    <div style={{ ...styles.legendColor, backgroundColor: "#ef4444" }}></div>
-                    <span>Loss</span>
-                  </div>
-                </div>
-              </div>
-              {loading.costProfit ? (
-                <div style={styles.loading}>Loading cost-profit data...</div>
-              ) : (
-                <Bar 
-                  data={prepareProfitChart()} 
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { display: false }
-                    },
-                    scales: {
-                      x: { grid: { display: false } },
-                      y: { 
-                        grid: { color: "#e5e7eb" },
-                        beginAtZero: false 
-                      }
-                    }
-                  }}
-                  height={300}
-                />
-              )}
-            </div>
-            
-            <div style={styles.chartCard}>
-              <div style={styles.chartHeader}>
-                <h2 style={styles.chartTitle}>
-                  <FiGlobe style={{ marginRight: 8 }} />
-                  Export Opportunities
-                </h2>
-              </div>
-              {loading.exportOpportunity ? (
-                <div style={styles.loading}>Loading export data...</div>
-              ) : (
-                <div style={styles.pieContainer}>
-                  <Pie 
-                    data={prepareExportChart()} 
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: { 
-                          position: 'right',
-                          labels: {
-                            boxWidth: 12,
-                            padding: 16
+                {loading.priceTrend ? (
+                  <div style={styles.loading}>Loading price data...</div>
+                ) : (
+                  <div style={styles.chartWrapper}>
+                    <Line 
+                      data={preparePriceTrendChart()} 
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: { display: false },
+                          tooltip: {
+                            mode: 'index',
+                            intersect: false
+                          }
+                        },
+                        scales: {
+                          x: { grid: { display: false } },
+                          y: { 
+                            grid: { color: "#e5e7eb" },
+                            beginAtZero: false 
                           }
                         }
-                      }
-                    }}
-                    height={250}
-                  />
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div style={styles.chartContainer}>
+              <div style={styles.chartCard}>
+                <div style={styles.chartHeader}>
+                  <h2 style={styles.chartTitle}>
+                    <FiBox style={{ marginRight: 8 }} />
+                    Supply-Demand Analysis
+                  </h2>
+                  <div style={styles.chartLegend}>
+                    <div style={styles.legendItem}>
+                      <div style={{ ...styles.legendColor, backgroundColor: "#10b981" }}></div>
+                      <span>Supply</span>
+                    </div>
+                    <div style={styles.legendItem}>
+                      <div style={{ ...styles.legendColor, backgroundColor: "#3b82f6" }}></div>
+                      <span>Demand</span>
+                    </div>
+                  </div>
                 </div>
-              )}
+                {loading.supplyDemandGap ? (
+                  <div style={styles.loading}>Loading supply-demand data...</div>
+                ) : (
+                  <div style={styles.chartWrapper}>
+                    <Bar 
+                      data={prepareSupplyDemandChart()} 
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: { display: false }
+                        },
+                        scales: {
+                          x: { grid: { display: false } },
+                          y: { 
+                            grid: { color: "#e5e7eb" },
+                            beginAtZero: true 
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          {/* Second Row - Profit and Export */}
+          <div style={styles.chartRow}>
+            <div style={styles.chartContainer}>
+              <div style={styles.chartCard}>
+                <div style={styles.chartHeader}>
+                  <h2 style={styles.chartTitle}>
+                    <FiDollarSign style={{ marginRight: 8 }} />
+                    Cost-Profit Analysis
+                  </h2>
+                  <div style={styles.chartLegend}>
+                    <div style={styles.legendItem}>
+                      <div style={{ ...styles.legendColor, backgroundColor: "#10b981" }}></div>
+                      <span>Profit</span>
+                    </div>
+                    <div style={styles.legendItem}>
+                      <div style={{ ...styles.legendColor, backgroundColor: "#ef4444" }}></div>
+                      <span>Loss</span>
+                    </div>
+                  </div>
+                </div>
+                {loading.costProfit ? (
+                  <div style={styles.loading}>Loading cost-profit data...</div>
+                ) : (
+                  <div style={styles.chartWrapper}>
+                    <Bar 
+                      data={prepareProfitChart()} 
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: { display: false }
+                        },
+                        scales: {
+                          x: { grid: { display: false } },
+                          y: { 
+                            grid: { color: "#e5e7eb" },
+                            beginAtZero: false 
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div style={styles.chartContainer}>
+              <div style={styles.chartCard}>
+                <div style={styles.chartHeader}>
+                  <h2 style={styles.chartTitle}>
+                    <FiGlobe style={{ marginRight: 8 }} />
+                    Export Opportunities
+                  </h2>
+                </div>
+                {loading.exportOpportunity ? (
+                  <div style={styles.loading}>Loading export data...</div>
+                ) : (
+                  <div style={styles.pieWrapper}>
+                    <Pie 
+                      data={prepareExportChart()} 
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: { 
+                            position: 'right',
+                            labels: {
+                              boxWidth: 12,
+                              padding: 16
+                            }
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </>
@@ -562,7 +570,9 @@ const styles = {
     backgroundColor: "#f9fafb",
     padding: "24px",
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-    color: "#111827"
+    color: "#111827",
+    maxWidth: "1400px",
+    margin: "0 auto"
   },
   header: {
     display: "flex",
@@ -683,17 +693,24 @@ const styles = {
     display: "flex",
     alignItems: "center"
   },
-  chartGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+  chartRow: {
+    display: "flex",
     gap: "20px",
-    marginBottom: "24px"
+    marginBottom: "20px",
+    flexWrap: "wrap"
+  },
+  chartContainer: {
+    flex: "1 1 45%",
+    minWidth: "400px"
   },
   chartCard: {
     backgroundColor: "white",
     borderRadius: "8px",
     padding: "16px",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column"
   },
   chartHeader: {
     display: "flex",
@@ -725,18 +742,21 @@ const styles = {
     height: "12px",
     borderRadius: "4px"
   },
+  chartWrapper: {
+    height: "300px",
+    position: "relative"
+  },
+  pieWrapper: {
+    height: "300px",
+    position: "relative",
+    margin: "0 auto"
+  },
   loading: {
     height: "300px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     color: "#6b7280"
-  },
-  pieContainer: {
-    height: "300px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
   },
   detailedView: {
     display: "flex",
