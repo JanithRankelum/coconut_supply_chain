@@ -86,7 +86,7 @@ function AboutUs() {
               </div>
             </div>
             
-            <button style={styles.contactButton}>Request a Demo</button>
+            <button style={styles.contactButton}>Contact Us</button>
           </div>
         </section>
       </div>
